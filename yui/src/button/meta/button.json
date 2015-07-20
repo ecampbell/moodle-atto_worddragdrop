@@ -1,5 +1,5 @@
 {
-    "moodle-atto_NEWTEMPLATE-button": {
+    "moodle-atto_worddragdrop-button": {
         "requires": [
             "moodle-editor_atto-plugin"
         ]
