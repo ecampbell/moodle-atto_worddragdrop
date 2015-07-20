@@ -15,10 +15,10 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Atto text editor integration version file.
+ * Atto text editor drag and drop Microsoft Word files.
  *
  * @package    atto_worddragdrop
- * @copyright  COPYRIGHTINFO
+ * @copyright  2015 Eoin Campbell
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -32,41 +32,14 @@ defined('MOODLE_INTERNAL') || die();
 function atto_worddragdrop_strings_for_js() {
     global $PAGE;
 
-    $PAGE->requires->strings_for_js(array('insert',
-                                          'cancel',
-                                          'enterflavor',
-                                          'dialogtitle'),
-                                    'atto_worddragdrop');
-}
+    $strings = array(
+        'insert',
+        'converting',
+        'uploading',
+        'enterflavor',
+        'dialogtitle'
+    );
 
-/**
- * Return the js params required for this module.
- * @return array of additional params to pass to javascript init function for this module.
- */
-function atto_worddragdrop_params_for_js($elementid, $options, $fpoptions) {
-	global $USER, $COURSE;
-	//coursecontext
-	$coursecontext=context_course::instance($COURSE->id);	
-	
-	//usercontextid
-	$usercontextid=context_user::instance($USER->id)->id;
-	$disabled=false;
-	
-	//config our array of data
-	$params = array();
-	$params['usercontextid'] = $usercontextid;
-
-		//If they don't have permission don't show it
-		if(!has_capability('atto/worddragdrop:visible', $coursecontext) ){
-			$disabled=true;
-		 }
-        
-        //add our disabled param
-        $params['disabled'] = $disabled;
-        
-        //add our default flavor
-        $params['defaultflavor'] = get_config('atto_worddragdrop','defaultflavor');
-
-    return $params;
+    $PAGE->requires->strings_for_js($strings, 'atto_worddragdrop');
 }
 

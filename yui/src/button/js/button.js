@@ -15,7 +15,7 @@
 
 /*
  * @package    atto_worddragdrop
- * @copyright  COPYRIGHTINFO
+ * @copyright  2015 Eoin Campbell
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -26,168 +26,127 @@
 /**
  * Atto text editor worddragdrop plugin.
  *
+ * This plugin adds the ability to drop a Word file in and have it automatically
+ * convert the contents into XHTML and into the text box.
+ *
  * @namespace M.atto_worddragdrop
- * @class button
+ * @class Button
  * @extends M.editor_atto.EditorPlugin
  */
-
 var COMPONENTNAME = 'atto_worddragdrop';
-var FLAVORCONTROL = 'worddragdrop_flavor';
-var LOGNAME = 'atto_worddragdrop';
-
-var CSS = {
-        INPUTSUBMIT: 'atto_media_urlentrysubmit',
-        INPUTCANCEL: 'atto_media_urlentrycancel',
-        FLAVORCONTROL: 'flavorcontrol'
-    },
-    SELECTORS = {
-        FLAVORCONTROL: '.flavorcontrol'
-    };
-
-var TEMPLATE = '' +
-    '<form class="atto_form">' +
-        '<div id="{{elementid}}_{{innerform}}" class="mdl-align">' +
-            '<label for="{{elementid}}_{{FLAVORCONTROL}}">{{get_string "enterflavor" component}}</label>' +
-            '<input class="{{CSS.FLAVORCONTROL}} id="{{elementid}}_{{FLAVORCONTROL}}" name="{{elementid}}_{{FLAVORCONTROL}}" value="{{defaultflavor}}" />' +
-            '<button class="{{CSS.INPUTSUBMIT}}">{{get_string "insert" component}}</button>' +
-        '</div>' +
-        'icon: {{clickedicon}}'  +
-    '</form>';
+    WORDTEMPLATE = '' +
+            '<img src="{{url}}" alt="{{alt}}" ' +
+                ' style="vertical-align:text-bottom;margin: 0 .5em;" class="img-responsive" ' +
+                '{{#if id}}id="{{id}}" {{/if}}' +
+                '/>';
 
 Y.namespace('M.atto_worddragdrop').Button = Y.Base.create('button', Y.M.editor_atto.EditorPlugin, [], {
-
-  
-	/**
-     * Initialize the button
+    /**
+     * A reference to the current selection at the time that the dialogue
+     * was opened.
      *
-     * @method Initializer
+     * @property _currentSelection
+     * @type Range
+     * @private
      */
-    initializer: function() {
-        // If we don't have the capability to view then give up.
-        if (this.get('disabled')){
-            return;
-        }
+    _currentSelection: null,
 
-        var twoicons = ['iconone', 'icontwo'];
+    /**
+     * Add event listeners.
+     *
+     * @method initializer
+     */
+    initializer : function() {
+        var self = this;
+        var host = this.get('host');
+        var template = Y.Handlebars.compile(WORDTEMPLATE);
+        this.editor.on('drop', function(e) {
+            host.saveSelection();
+            e = e._event;
+            // Only handle the event if a Word file was dropped in.
+            if (e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files.length && /^image\//.test(e.dataTransfer.files[0].type)) {
+                e.preventDefault();
+                e.stopPropagation();
+                var options = host.get('filepickeroptions').image;
+                var savepath = (options.savepath === undefined) ? '/' : options.savepath;
+                var formData = new FormData();
 
-        Y.Array.each(twoicons, function(theicon) {
-            // Add the worddragdrop icon/buttons
-            this.addButton({
-                icon: 'ed/' + theicon,
-                iconComponent: 'atto_worddragdrop',
-                buttonName: theicon,
-                callback: this._displayDialogue,
-                callbackArgs: theicon
-            });
+                formData.append('repo_upload_file', e.dataTransfer.files[0]);
+                formData.append('itemid', options.itemid);
+                // List of repositories is an object rather than an array.  This makes iteration more awkward.
+                var keys = Object.keys(options.repositories);
+                for (var i=0; i<keys.length; i++) {
+                    if (options.repositories[keys[i]].type === 'upload') {
+                        formData.append('repo_id', options.repositories[keys[i]].id);
+                        break;
+                    }
+                }
+                formData.append('env', options.env);
+                formData.append('sesskey', M.cfg.sesskey);
+                formData.append('client_id', options.client_id);
+                formData.append('savepath', savepath);
+                formData.append('ctx_id', options.context.id);
+
+                // Insert spinner as a placeholder.
+                var timestamp = new Date().getTime();
+                var uploadid = 'moodleimage_' + Math.round(Math.random()*100000)+'-'+timestamp;
+
+                host.focus();
+                host.restoreSelection();
+                var imagehtml = template({
+                    url: M.util.image_url("i/loading_small", 'moodle'),
+                    alt: M.util.get_string('uploading', COMPONENTNAME),
+                    id: uploadid
+                });
+                host.insertContentAtFocusPoint(imagehtml);
+                self.markUpdated();
+
+                var xhr = new XMLHttpRequest();
+
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState === 4) {
+                        var placeholder = self.editor.one('#' + uploadid);
+                        if (xhr.status === 200) {
+                            var result = JSON.parse(xhr.responseText);
+                            if (result) {
+                                if (result.error) {
+                                    if (placeholder) {
+                                        placeholder.remove(true);
+                                    }
+                                    return new M.core.ajaxException(result);
+                                }
+
+                                var file = result;
+
+                                // Replace placeholder with actual image.
+                                var filename = file.filename || file.file;
+                                var newhtml = template({
+                                    url: file.url,
+                                    alt: filename
+                                });
+                                var newimage = Y.Node.create(newhtml);
+                                if (placeholder) {
+                                    placeholder.replace(newimage);
+                                } else {
+                                    self.editor.appendChild(newimage);
+                                }
+                                self.markUpdated();
+                            }
+                        } else {
+                            alert(M.util.get_string('servererror', 'moodle'));
+                            if (placeholder) {
+                                placeholder.remove(true);
+                            }
+                        }
+                    }
+                };
+
+                // Send the AJAX call.
+                xhr.open("POST", M.cfg.wwwroot + '/repository/repository_ajax.php?action=upload', true);
+                xhr.send(formData);
+                return false;
+            }
         }, this);
-
-    },
-
-    /**
-     * Get the id of the flavor control where we store the ice cream flavor
-     *
-     * @method _getFlavorControlName
-     * @return {String} the name/id of the flavor form field
-     * @private
-     */
-    _getFlavorControlName: function(){
-        return(this.get('host').get('elementid') + '_' + FLAVORCONTROL);
-    },
-
-     /**
-     * Display the worddragdrop Dialogue
-     *
-     * @method _displayDialogue
-     * @private
-     */
-    _displayDialogue: function(e, clickedicon) {
-        e.preventDefault();
-        var width=400;
-
-
-        var dialogue = this.getDialogue({
-            headerContent: M.util.get_string('dialogtitle', COMPONENTNAME),
-            width: width + 'px',
-            focusAfterHide: clickedicon
-        });
-		//dialog doesn't detect changes in width without this
-		//if you reuse the dialog, this seems necessary
-        if(dialogue.width !== width + 'px'){
-            dialogue.set('width',width+'px');
-        }
-
-        //append buttons to iframe
-        var buttonform = this._getFormContent(clickedicon);
-
-        var bodycontent =  Y.Node.create('<div></div>');
-        bodycontent.append(buttonform);
-
-        //set to bodycontent
-        dialogue.set('bodyContent', bodycontent);
-        dialogue.show();
-        this.markUpdated();
-    },
-
-
-     /**
-     * Return the dialogue content for the tool, attaching any required
-     * events.
-     *
-     * @method _getDialogueContent
-     * @return {Node} The content to place in the dialogue.
-     * @private
-     */
-    _getFormContent: function(clickedicon) {
-        var template = Y.Handlebars.compile(TEMPLATE),
-            content = Y.Node.create(template({
-                elementid: this.get('host').get('elementid'),
-                CSS: CSS,
-                FLAVORCONTROL: FLAVORCONTROL,
-                component: COMPONENTNAME,
-                defaultflavor: this.get('defaultflavor'),
-                clickedicon: clickedicon
-            }));
-
-        this._form = content;
-        this._form.one('.' + CSS.INPUTSUBMIT).on('click', this._doInsert, this);
-        return content;
-    },
-
-    /**
-     * Inserts the users input onto the page
-     * @method _getDialogueContent
-     * @private
-     */
-    _doInsert : function(e){
-        e.preventDefault();
-        this.getDialogue({
-            focusAfterHide: null
-        }).hide();
-
-        var flavorcontrol = this._form.one(SELECTORS.FLAVORCONTROL);
-
-        // If no file is there to insert, don't do it.
-        if (!flavorcontrol.get('value')){
-            Y.log('No flavor control or value could be found.', 'warn', LOGNAME);
-            return;
-        }
-
-        this.editor.focus();
-        this.get('host').insertContentAtFocusPoint(flavorcontrol.get('value'));
-        this.markUpdated();
-
     }
-}, { ATTRS: {
-		disabled: {
-			value: false
-		},
 
-		usercontextid: {
-			value: null
-		},
-
-		defaultflavor: {
-			value: ''
-		}
-	}
 });

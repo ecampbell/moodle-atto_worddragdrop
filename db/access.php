@@ -18,7 +18,7 @@
  * Plugin capabilities
  *
  * @package    atto_worddragdrop
- * @copyright  COPYRIGHTINFO
+ * @copyright  2015 Eoin Campbell
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 

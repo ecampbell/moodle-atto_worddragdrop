@@ -18,13 +18,15 @@
  * Strings for component 'atto_worddragdrop', language 'en'.
  *
  * @package    atto_worddragdrop
- * @copyright  COPYRIGHTINFO
+ * @copyright  2015 Eoin Campbell
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-$string['createworddragdrop'] = 'Create worddragdrop';
-$string['pluginname'] = 'worddragdrop (Atto)';
-$string['settings'] = 'worddragdrop (Atto)';
+$string['createworddragdrop'] = 'Create Word drag & drop';
+$string['pluginname'] = 'Word drag & drop (Atto)';
+$string['settings'] = 'Word drag & drop (Atto)';
+$string['uploading'] = 'Uploading, please wait...';
+$string['converting'] = 'Converting, please wait...';
 $string['browse'] = 'Browse';
 $string['visible'] = 'Visible';
 $string['nothingtoinsert'] = 'Nothing to insert!';
