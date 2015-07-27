@@ -1,3 +1,5 @@
+YUI.add('moodle-atto_worddragdrop-button', function (Y, NAME) {
+
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -63,8 +65,6 @@ Y.namespace('M.atto_worddragdrop').Button = Y.Base.create('button', Y.M.editor_a
         this.editor.on('drop', function(e) {
             host.saveSelection();
             e = e._event;
-            Y.log("length = " + e.dataTransfer.files.length, "warning", "atto_worddragdrop");
-            Y.log("type = " + e.dataTransfer.files[0].type, "warning", "atto_worddragdrop");
             // Only handle the event if a Word file was dropped in.
             if (e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files.length && /^application\/vnd.openxmlformats-officedocument.wordprocessingml.document/.test(e.dataTransfer.files[0].type)) {
                 e.preventDefault();
@@ -152,3 +152,6 @@ Y.namespace('M.atto_worddragdrop').Button = Y.Base.create('button', Y.M.editor_a
     }
 
 });
+
+
+}, '@VERSION@', {"requires": ["moodle-editor_atto-plugin"]});
