@@ -1,5 +1,5 @@
-Word drag and drop plugin for Moodle Atto editor
-================================================
+Word drag and drop plugin for Moodle TinyMCE editor
+===================================================
 
 Release notes
 -------------
