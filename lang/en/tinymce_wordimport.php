@@ -17,14 +17,14 @@
 /**
  * Strings for component 'atto_worddragdrop', language 'en'.
  *
- * @package    atto_worddragdrop
+ * @package    tinymce_wordimport
  * @copyright  2015 Eoin Campbell
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-$string['createworddragdrop'] = 'Create Word drag & drop';
-$string['pluginname'] = 'Word drag & drop (Atto)';
-$string['settings'] = 'Word drag & drop (Atto)';
+$string['createwordimport'] = 'Create Word import';
+$string['pluginname'] = 'Word import (TinyMCE)';
+$string['settings'] = 'Word import (TinyMCE)';
 $string['uploading'] = 'Uploading, please wait...';
 $string['converting'] = 'Converting, please wait...';
 $string['browse'] = 'Browse';
@@ -33,6 +33,3 @@ $string['nothingtoinsert'] = 'Nothing to insert!';
 $string['dialogtitle'] = 'Enter Preferences';
 $string['insert'] = 'Insert';
 $string['cancel'] = 'Cancel';
-$string['enterflavor'] = 'Enter Ice Cream Flavor';
-$string['defaultflavor'] = 'Default Ice Cream Flavor';
-$string['worddragdrop:visible'] = 'Visible';
