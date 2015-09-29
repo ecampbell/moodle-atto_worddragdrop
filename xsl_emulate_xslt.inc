@@ -15,9 +15,9 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Atto text editor import Microsoft Word file and convert to HTML
+ * TinyMCE text editor import Microsoft Word file and convert to HTML
  *
- * @package   atto_wordimport
+ * @package   tinymce_wordimport
  * @copyright 2015 Eoin Campbell
  * @copyright 2005 Ziba Scott
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later

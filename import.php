@@ -15,9 +15,9 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Atto text editor import Microsoft Word file and convert to HTML
+ * TinyMCE text editor import Microsoft Word file and convert to HTML
  *
- * @package   atto_wordimport
+ * @package   tinymce_wordimport
  * @copyright 2015 Eoin Campbell
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -61,14 +61,14 @@ if ($file) {
     $file->delete();
 
     // Convert the Word file into XHTML with images, and delete it once we're finished.
-    $htmltext = atto_wordimport_convert_to_xhtml($tmpfilename, $contextid, $itemid);
-    atto_wordimport_debug_unlink($tmpfilename);
+    $htmltext = tinymce_wordimport_convert_to_xhtml($tmpfilename, $contextid, $itemid);
+    tinymce_wordimport_debug_unlink($tmpfilename);
 
     if ($htmltext !== false) {
          debugging(basename(__FILE__) . " (" . __LINE__ . "): htmltext = |" .
                 str_replace("\n", " ", substr($htmltext, 0, 500)) . "...|", DEBUG_WORDIMPORT);
          // Get the body content only, ignoring any metadata in the head.
-         $bodytext = atto_wordimport_get_html_body($htmltext);
+         $bodytext = tinymce_wordimport_get_html_body($htmltext);
         // Convert the string to JSON-encoded format.
         $htmltextjson = json_encode($bodytext);
         if ($htmltextjson) {

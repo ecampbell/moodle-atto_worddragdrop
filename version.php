@@ -15,19 +15,19 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Atto worddragdrop version file.
+ * TinyMCE Word import plugin version details.
  *
- * @package    atto_worddragdrop
- * @copyright  2015 Eoin Campbell
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @package   tinymce_wordimport
+ * @copyright 2015 Eoin Campbell
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version   = 2015072004;        // The current plugin version (Date: YYYYMMDDXX).
-$plugin->requires  = 2013110500;        // Requires this Moodle version.
-$plugin->component = 'atto_worddragdrop';  // Full name of the plugin (used for diagnostics).
+// The current plugin version (Date: YYYYMMDDXX).
+$plugin->version   = 2015092900;
+$plugin->requires = 2011070100.03;  // Requires Moodle 2.1 or later.
 $plugin->maturity  = MATURITY_BETA;
-// Human readable version informatiomn
-$plugin->release   = '0.0.4 (Build 2015072004)';
-
+$plugin->release   = '0.5.0 (Build 2015092901)'; // Human readable version information.
+// Full name of the plugin (used for diagnostics).
+$plugin->component = 'tinymce_wordimport';

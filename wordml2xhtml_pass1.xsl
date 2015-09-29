@@ -4695,7 +4695,7 @@
                 </div>
             </body>
             <!-- Keep original images data if importing directly into database -->
-            <xsl:if test="$pluginname = 'atto_wordimport'">
+            <xsl:if test="$pluginname = 'tinymce_wordimport'">
                 <xsl:apply-templates select="//imagesContainer"/>
             </xsl:if>
         </html>
@@ -4750,7 +4750,7 @@
         <!-- Store the image data or URL in the src attribute -->
         <xsl:variable name="img_src">
             <xsl:choose>
-            <xsl:when test="$img_rid != '' and $pluginname = 'atto_wordimport'">
+            <xsl:when test="$img_rid != '' and $pluginname = 'tiny_wordimport'">
                 <!-- Dereference the reference ID field to get the file name, and map to the src attribute -->
                 <xsl:value-of select="$imagesContainer/file[@filename = $img_filename]"/>
             </xsl:when>
