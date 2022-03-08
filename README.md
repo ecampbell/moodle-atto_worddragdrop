@@ -1,11 +1,5 @@
-Word drag and drop plugin for Moodle TinyMCE editor
-===================================================
-
-Release notes
--------------
-Date          Version   Comment
-2015/09/29    0.5.0     Initial set of files copied from Moodle Atto Word import
-
+Word Import plugin for Moodle TinyMCE editor
+============================================
 
 Description
 -----------
@@ -16,7 +10,8 @@ tables and equations are converted into HTML/MathML and pasted into the box.
 
 Requirements
 ------------
+- The Microsoft Word file Import/Export (Book) plugin must be installed on the Moodle server 
+to enable the conversion to be done.
+
 - The Word files must be in .docx (Word 2007/2010) format.
 
-- The XSL PHP extension must be installed on the Moodle server to enable the
-conversion to be done.
