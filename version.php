@@ -15,19 +15,21 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * TinyMCE Word import plugin version details.
+ * TinyMCE Word file import plugin version details.
  *
  * @package   tinymce_wordimport
- * @copyright 2015 Eoin Campbell
+ * @copyright 2022 Eoin Campbell
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die();
 
 // The current plugin version (Date: YYYYMMDDXX).
-$plugin->version   = 2015092900;
-$plugin->requires = 2011070100.03;  // Requires Moodle 2.1 or later.
-$plugin->maturity  = MATURITY_BETA;
-$plugin->release   = '0.5.0 (Build 2015092901)'; // Human readable version information.
+$plugin->version   = 2022030808;
+// Required Moodle version.
+$plugin->requires  = 2020060900;
 // Full name of the plugin (used for diagnostics).
 $plugin->component = 'tinymce_wordimport';
+$plugin->maturity  = MATURITY_ALPHA;
+$plugin->release   = '0.0.8 (Build 20220308)'; // Human readable version information.
+$plugin->dependencies = array('booktool_wordimport' => 2021083100);

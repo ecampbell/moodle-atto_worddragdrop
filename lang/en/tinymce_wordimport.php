@@ -15,21 +15,31 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Strings for component 'atto_worddragdrop', language 'en'.
+ * Strings for Word file import plugin.
  *
- * @package    tinymce_wordimport
- * @copyright  2015 Eoin Campbell
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @package   tinymce_wordimport
+ * @copyright 2022 Eoin Campbell
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-$string['createwordimport'] = 'Create Word import';
-$string['pluginname'] = 'Word import (TinyMCE)';
-$string['settings'] = 'Word import (TinyMCE)';
+$string['pluginname'] = 'Import Word file';
+$string['pluginname2'] = 'Microsoft Word File Import (TinyMCE)'.
+$string['privacy:metadata']      = 'The Microsoft Word file import plugin for TinyMCE does not store personal data.';
 $string['uploading'] = 'Uploading, please wait...';
-$string['converting'] = 'Converting, please wait...';
-$string['browse'] = 'Browse';
-$string['visible'] = 'Visible';
-$string['nothingtoinsert'] = 'Nothing to insert!';
-$string['dialogtitle'] = 'Enter Preferences';
-$string['insert'] = 'Insert';
-$string['cancel'] = 'Cancel';
+$string['wordimport:wordfile'] = 'Find or upload a Word file...';
+
+// Strings used in JavaScript.
+$string['transformationfailed'] = 'XSLT transformation failed (<b>{$a}</b>)';
+$string['fileuploadfailed'] = 'File upload failed';
+$string['fileconversionfailed'] = 'File conversion failed';
+
+// Strings used in settings.
+$string['settings'] = 'Microsoft Word File Import (TinyMCE) settings';
+$string['heading1stylelevel'] = 'Heading element level for Heading 1 style';
+$string['heading1stylelevel_desc'] = 'HTML heading element level to which the Word "Heading 1" style should be mapped';
+
+$string['wordimport:wordimport_desc'] = 'Import a Word file';
+$string['wordimport:import'] = 'Import';
+$string['wordimport_dlg:browsewordfile'] = 'Find or upload a Word file';
+$string['wordimport_dlg:dialog_title'] = 'Import Word file';
+$string['wordimport_dlg:src'] = 'Word file';

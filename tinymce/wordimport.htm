@@ -1,0 +1,66 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>{#wordimport_dlg.dialog_title}</title>
+    <script type="text/javascript">
+        // Because there is no relative path to TinyMCE, we have to use JavaScript
+        // to work out correct path from the .js files from TinyMCE. Only files
+        // inside this plugin can be included with relative path (below).
+        var editor_tinymce_include = function(path) {
+            document.write('<script type="text/javascript" src="' +
+                    parent.tinyMCE.baseURL + '/' + path + '"></' + 'script>');
+        };
+        editor_tinymce_include('tiny_mce_popup.js');
+        editor_tinymce_include('utils/mctabs.js');
+        editor_tinymce_include('utils/validate.js');
+        editor_tinymce_include('utils/form_utils.js');
+        editor_tinymce_include('utils/editable_selects.js');
+
+        var getWordImportBrowserHTML = function(id, target_form_element, type, prefix) {
+            var option = prefix + "_" + type + "_browser_callback", cb, html;
+
+            cb = tinyMCEPopup.getParam(option, tinyMCEPopup.getParam("file_browser_callback"));
+
+            if (!cb)
+                return "";
+
+            html = '<a class="moodlebutton" id="' + id + '_link" href="javascript:openBrowser(\'' + id + '\',\'' + target_form_element + '\', \'' + type + '\',\'' + option + '\');" onmousedown="return false;">';
+            html += '<span id="' + id + '">' + tinyMCEPopup.getLang('wordimport.browsewordfile') + '</span>';
+            html += '</a>';
+
+            return html;
+        }
+
+    </script>
+    <script type="text/javascript" src="js/wordimport.js"></script>
+	<link href="css/wordimport.css" rel="stylesheet" type="text/css" />
+</head>
+<body id="wordimport" style="display: none" role="application" aria-labelledby="app_title">
+	<span id="app_title" style="display:none">{#wordimport_dlg.dialog_title}</span>
+    <form onsubmit="WordImportDialog.insert();return false;" action="#"> 
+		<table role="presentation" class="properties"td>
+			<tr>
+			   <td class="column1">&nbsp;</td>
+			   <td align="left" id="srcbrowsercontainer">&nbsp;</td>
+			</tr>
+			<tr>
+				<td class="column1"><label id="srclabel" for="src">{#wordimport_dlg.src}</label></td>
+				<!--
+				<td><input name="src" type="text" id="src" value="" class="mceFocus" onchange="WordImportDialog.showPreviewImage(this.value);" aria-required="true" /></td>
+				-->
+			</tr>
+			<tr>
+				<td><label for="src_list">{#wordimport_dlg.wordfile_list}</label></td>
+				<!--
+				<td><select id="src_list" name="src_list" onchange="document.getElementById('src').value=this.options[this.selectedIndex].value;document.getElementById('alt').value=this.options[this.selectedIndex].text;document.getElementById('title').value=this.options[this.selectedIndex].text;WordImportDialog.showPreviewImage(this.options[this.selectedIndex].value);"><option value=""></option></select></td>
+				-->
+			</tr>
+		</table>
+		<div class="mceActionPanel">
+			<input type="submit" id="import" name="import" value="{#wordimport.import}" />
+			<input type="button" id="cancel" name="cancel" value="{#cancel}" onclick="tinyMCEPopup.close();" />
+		</div>
+    </form>
+</body> 
+</html> 
