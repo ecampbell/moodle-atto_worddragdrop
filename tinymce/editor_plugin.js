@@ -11,7 +11,7 @@
 (function() {
 	tinymce.create('tinymce.plugins.WordImportPlugin', {
 		init : function(ed, url) {
-			// Register commands
+			// Register commands.
 			ed.addCommand('mceWordImport', function() {
 				// Internal image object like a flash placeholder
 				if (ed.dom.getAttrib(ed.selection.getNode(), 'class', '').indexOf('mceItem') != -1)
@@ -19,15 +19,16 @@
 
 				ed.windowManager.open({
 					file : url + '/wordimport.htm',
+					// file : url + '/wordimport.htm',
 					width : 480 + parseInt(ed.getLang('wordimport.delta_width', 0)),
-					height : 385 + parseInt(ed.getLang('wordimport.delta_height', 0)),
+					height : 185 + parseInt(ed.getLang('wordimport.delta_height', 0)),
 					inline : 1
 				}, {
 					plugin_url : url
 				});
 			});
 
-			// Register buttons
+			// Register button in TinyMCE toolbar.
 			ed.addButton('wordimport', {
 				title : 'wordimport.wordimport_desc',
 				cmd : 'mceWordImport',

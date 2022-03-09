@@ -6,3 +6,4 @@ tinyMCE.addI18n('en.wordimport_dlg',{
     import: "Import",
 	src: "Word file"
 });
+

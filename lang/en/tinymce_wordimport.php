@@ -26,9 +26,12 @@ $string['pluginname'] = 'Import Word file';
 $string['pluginname2'] = 'Microsoft Word File Import (TinyMCE)'.
 $string['privacy:metadata']      = 'The Microsoft Word file import plugin for TinyMCE does not store personal data.';
 $string['uploading'] = 'Uploading, please wait...';
-$string['wordimport:wordfile'] = 'Find or upload a Word file...';
 
 // Strings used in JavaScript.
+$string['wordimport:browsewordfile'] = 'Find or upload a Word file...';
+$string['wordimport:wordimport_desc'] = 'Import a Word file (.docx)';
+
+// Strings used in conversion process.
 $string['transformationfailed'] = 'XSLT transformation failed (<b>{$a}</b>)';
 $string['fileuploadfailed'] = 'File upload failed';
 $string['fileconversionfailed'] = 'File conversion failed';
@@ -38,8 +41,9 @@ $string['settings'] = 'Microsoft Word File Import (TinyMCE) settings';
 $string['heading1stylelevel'] = 'Heading element level for Heading 1 style';
 $string['heading1stylelevel_desc'] = 'HTML heading element level to which the Word "Heading 1" style should be mapped';
 
-$string['wordimport:wordimport_desc'] = 'Import a Word file';
-$string['wordimport:import'] = 'Import';
-$string['wordimport_dlg:browsewordfile'] = 'Find or upload a Word file';
+
+// Strings used in HTML dialog box.
 $string['wordimport_dlg:dialog_title'] = 'Import Word file';
 $string['wordimport_dlg:src'] = 'Word file';
+$string['wordimport_dlg:wordfile_list'] = 'Word file(s)';
+$string['wordimport_dlg:import'] = 'Import';

@@ -4,12 +4,12 @@ var WordImportDialog = {
 
 		tinyMCEPopup.requireLangPack();
 
-		if (url = tinyMCEPopup.getParam("external_image_list_url"))
+		if (url = tinyMCEPopup.getParam("external_wordfile_list_url"))
 			document.write('<script language="javascript" type="text/javascript" src="' + tinyMCEPopup.editor.documentBaseURI.toAbsolute(url) + '"></script>');
 	},
 
 	init : function(ed) {
-		var f = document.forms[0], nl = f.elements, ed = tinyMCEPopup.editor, dom = ed.dom, n = ed.selection.getNode(), fl = tinyMCEPopup.getParam('external_image_list', 'tinyMCEImageList');
+		var f = document.forms[0], nl = f.elements, ed = tinyMCEPopup.editor, dom = ed.dom, n = ed.selection.getNode(), fl = tinyMCEPopup.getParam('external_wordfile_list', 'tinyMCEImageList');
 
 		tinyMCEPopup.resizeToInnerSize();
 		this.fillClassList('class_list');
@@ -21,22 +21,22 @@ var WordImportDialog = {
 
 
 		// Setup browse button
-		document.getElementById('srcbrowsercontainer').innerHTML = getWordImportBrowserHTML('srcbrowser','src','wordimport','media'); // Moodle hack
+		document.getElementById('srcbrowsercontainer').innerHTML = getWordImportBrowserHTML('srcbrowser','src','file','media'); // Moodle hack
 		if (isVisible('srcbrowser'))
 			document.getElementById('src').style.width = '260px';
 
 		// Setup browse button
-		document.getElementById('onmouseoversrccontainer').innerHTML = getBrowserHTML('overbrowser','onmouseoversrc','wordimport','media');
+		document.getElementById('onmouseoversrccontainer').innerHTML = getBrowserHTML('overbrowser','onmouseoversrc','file','media');
 		if (isVisible('overbrowser'))
 			document.getElementById('onmouseoversrc').style.width = '260px';
 
 		// Setup browse button
-		document.getElementById('onmouseoutsrccontainer').innerHTML = getBrowserHTML('outbrowser','onmouseoutsrc','wordimport','media');
+		document.getElementById('onmouseoutsrccontainer').innerHTML = getBrowserHTML('outbrowser','onmouseoutsrc','file','media');
 		if (isVisible('outbrowser'))
 			document.getElementById('onmouseoutsrc').style.width = '260px';
 	},
 
-	insert : function(file, title) {
+	import : function(file, title) {
 		var ed = tinyMCEPopup.editor, t = this, f = document.forms[0];
 
 		if (f.src.value === '') {

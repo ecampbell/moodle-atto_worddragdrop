@@ -25,11 +25,11 @@
 defined('MOODLE_INTERNAL') || die();
 
 // The current plugin version (Date: YYYYMMDDXX).
-$plugin->version   = 2022030808;
+$plugin->version   = 2022030914;
 // Required Moodle version.
 $plugin->requires  = 2020060900;
 // Full name of the plugin (used for diagnostics).
 $plugin->component = 'tinymce_wordimport';
 $plugin->maturity  = MATURITY_ALPHA;
-$plugin->release   = '0.0.8 (Build 20220308)'; // Human readable version information.
+$plugin->release   = '0.1.4 (Build 20220309)'; // Human readable version information.
 $plugin->dependencies = array('booktool_wordimport' => 2021083100);
